@@ -8,6 +8,7 @@ def mock_dao():
     dao_mock = Mock()
     return dao_mock
 
+@pytest.mark.unit
 def test_get_user_by_email_valid_single(mock_dao):
     # Setup
     user_controller = UserController(dao=mock_dao)
@@ -20,6 +21,7 @@ def test_get_user_by_email_valid_single(mock_dao):
     # Assertion
     assert user == {"email": email, "name": "Test User"}
 
+@pytest.mark.unit
 def test_get_user_by_email_valid_multiple(mock_dao, capsys):
     # Setup
     user_controller = UserController(dao=mock_dao)
@@ -34,6 +36,7 @@ def test_get_user_by_email_valid_multiple(mock_dao, capsys):
     captured = capsys.readouterr()
     assert "more than one user found with mail" in captured.out
 
+@pytest.mark.unit
 def test_get_user_by_email_invalid_format(mock_dao):
     # Setup
     user_controller = UserController(dao=mock_dao)
@@ -43,6 +46,7 @@ def test_get_user_by_email_invalid_format(mock_dao):
     with pytest.raises(ValueError):
         user_controller.get_user_by_email(email)
 
+@pytest.mark.unit
 def test_get_user_by_email_non_existent(mock_dao):
     # Setup
     user_controller = UserController(dao=mock_dao)
@@ -55,6 +59,7 @@ def test_get_user_by_email_non_existent(mock_dao):
     # Assertion
     assert user is None
 
+@pytest.mark.unit
 def test_get_user_by_email_database_error(mock_dao):
     # Setup
     user_controller = UserController(dao=mock_dao)

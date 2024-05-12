@@ -37,6 +37,7 @@ def TDAO():
 	
 	d.drop()
 
+@pytest.mark.integration
 def test_create_valid_object(TDAO):
 	
 	created = TDAO.create({
@@ -52,6 +53,7 @@ def test_create_valid_object(TDAO):
 	assert len(found) == 1
 	assert found[0] == created
 
+@pytest.mark.integration
 def test_create_object_with_missing_property(TDAO):
 	with pytest.raises(WriteError):
 		TDAO.create({"name": "test"})
@@ -60,6 +62,7 @@ def test_create_object_with_missing_property(TDAO):
 	
 	assert len(found) == 0
 
+@pytest.mark.integration
 def test_create_object_with_invalid_type(TDAO):
 	with pytest.raises(WriteError):
 		TDAO.create({"name": "test", "description": "testing", "optBool": "A string"})
@@ -68,6 +71,7 @@ def test_create_object_with_invalid_type(TDAO):
 	
 	assert len(found) == 0
 
+@pytest.mark.integration
 def test_create_objects_with_unique_properties(TDAO):
 	first = TDAO.create({"name": "test1", "description": "testing"})
 	second = TDAO.create({"name": "test2", "description": "testing"})
@@ -77,6 +81,7 @@ def test_create_objects_with_unique_properties(TDAO):
 	assert first in found
 	assert second in found
 
+@pytest.mark.integration
 def test_create_objects_with_duplicate_unique_properties(TDAO):
 	created = TDAO.create({"name": "test", "description": "testing"})
 	with pytest.raises(WriteError):
