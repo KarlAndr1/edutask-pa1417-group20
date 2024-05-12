@@ -25,5 +25,5 @@ jobs:
 
          - name: Unit tests
            run:
-              cd backend
+              cd backend &&
               python -m pytest -m unit
