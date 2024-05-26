@@ -26,15 +26,18 @@ def test_get_user_by_email_valid_multiple(mock_dao, capsys):
     # Setup
     user_controller = UserController(dao=mock_dao)
     email = "user@example.com"
-    mock_dao.find.return_value = [{"email": email, "name": "Test User 1"}, {"email": email, "name": "Test User 2"}]
+    mock_dao.find.return_value = [
+        {"email": email, "name": "Test User 1"},
+        {"email": email, "name": "Test User 2"}
+    ]
 
     # Execution
     user = user_controller.get_user_by_email(email)
+    captured = capsys.readouterr()
 
     # Assertion
-    assert user == {"email": email, "name": "Test User 1"}
-    captured = capsys.readouterr()
-    assert "more than one user found with mail" in captured.out
+    assert (user == {"email": email, "name": "Test User 1"} and 
+            "more than one user found with mail" in captured.out)
 
 @pytest.mark.unit
 def test_get_user_by_email_invalid_format(mock_dao):
